@@ -1,0 +1,3 @@
+CREATE DATABASE example;
+
+CREATE DATABASE test;

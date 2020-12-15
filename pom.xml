@@ -12,21 +12,51 @@
     <artifactId>postgre-luquidbase-boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>postgre-luquidbase-boot</name>
-    <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <version.mapstruct>1.4.1.Final</version.mapstruct>
+        <version.maven.compiler.plugin>3.8.1</version.maven.compiler.plugin>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${version.mapstruct}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${version.mapstruct}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
+
+        <!--       <dependency>
+                   <groupId>org.liquibase</groupId>
+                   <artifactId>liquibase-core</artifactId>
+               </dependency>-->
 
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -46,7 +76,30 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${version.maven.compiler.plugin}</version>
+            </plugin>
         </plugins>
     </build>
 
 </project>
+
+        <!--<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${version.maven.compiler.plugin}</version>
+        <configuration>
+            <source>${java.version}</source> &lt;!&ndash;depending on your project&ndash;&gt;
+            <target>${java.version}</target> &lt;!&ndash;depending on your project&ndash;&gt;
+            <annotationProcessorPaths>
+                <path>
+                    <groupId>org.mapstruct</groupId>
+                    <artifactId>mapstruct-processor</artifactId>
+                    <version>${version.mapstruct}</version>
+                </path>
+            </annotationProcessorPaths>
+        </configuration>
+        </plugin>-->

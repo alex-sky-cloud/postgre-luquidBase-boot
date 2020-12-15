@@ -1,0 +1,82 @@
+#Если укажете использование версии - 3.8,
+#тогда данный файл не будет корректно прочитан
+# и не будет работать для Docker Engine 19.03.0+
+version: '3.5'
+services:
+  #имя сервиса, для которого создается контейнер
+  postgres:
+    container_name: postgres_container
+    image: postgres:11.7
+    #глобальные переменные
+    environment:
+      #${POSTGRES_USER:-postgres} - такой тип записи, указывает
+      # на установку значения по умолчанию. Через docker-compose run
+      # установка значений для переменных среды - не работает
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+      #название базы данных
+      #POSTGRES_DB: example
+      #путь к каталогу в контейнере для текущего сервиса, где будут
+      #находится файлы для базы данных
+      PGDATA: /data/postgres
+    #правая часть - это название тома, в текущей docker machine
+    # имя данного тома будет объявлено ниже.
+    # В левой части - данные внутри контейнера, а точнее ссылка,
+    # на подмонтированный том в контейнера, из внешней файловой системы
+    # то есть `postgres` - это каталого, который находится вне контейнера
+    # если контейнер будет удалено, то данные из этого каталогоа остануться
+    #/data/postgres - по этому пути расологаются данные от СУБД,
+    # но с учетом настроек, указанных ниже, физически эти данных
+    #будут находится в томе (volume) `postgres`
+    # ./init.sql (для unix system) - Скрипт находится в том же каталоге, что и docker-compose.yml
+    # Как только сервис будет создан, тогда запуситься скрипт, который создаст базы данных,
+    # указанных в скрипте
+    # для windows систем, вам нужно в настройках  docker default machine
+    #в Virtual box, добавить точку подлкючения в ту папку, где находится init.sql
+    # затем указываете имя папки-подлкючения, которую задали, и файл скрипта
+    # - //docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - postgres:/data/postgres
+      - //docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    #имя виртуальной сети, которая будет исопльзоваться между
+    # определяемыми контейнерами (тип исопльзуемого драйвера,
+    # определен ниже)
+    networks:
+      - postgres
+    #запуск pgadmin будет происходить только
+    # если запущен контейнер с СУБД
+    depends_on:
+      - postgres
+    #перезапускать контейнер,
+    #пока он не будет остановлен явно (командой stop)
+    #или пока не завершится демон Docker;
+    restart: unless-stopped
+
+#определяем именя сетей и драйвера для их функционирования
+# bridge - является типом сети по умолчанию для контейнеров.
+# в данном случае будет создана сеть с именем `postgres`
+# и типом исопльзуемого драйвера `bridge`
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+
