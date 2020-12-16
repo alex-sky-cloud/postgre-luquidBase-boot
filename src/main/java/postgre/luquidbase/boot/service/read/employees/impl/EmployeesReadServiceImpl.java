@@ -33,7 +33,8 @@ public class EmployeesReadServiceImpl implements EmployeesReadService {
         return toListEmployeesDto(repositoryAll);
     }
 
-    private  Iterable<EmployeeDto> toListEmployeesDto(Iterable<Employee> list){
+
+    public  Iterable<EmployeeDto> toListEmployeesDto(Iterable<Employee> list){
         return mapper.toListDto(list);
     }
 }
