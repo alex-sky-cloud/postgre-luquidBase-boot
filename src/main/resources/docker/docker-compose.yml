@@ -5,7 +5,7 @@ version: '3.5'
 services:
   #имя сервиса, для которого создается контейнер
   postgres:
-    container_name: postgres_container
+    container_name: postgres_container_luquid
     image: postgres:11.7
     #глобальные переменные
     environment:
@@ -37,9 +37,9 @@ services:
     # - //docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     volumes:
       - postgres:/data/postgres
-      - //docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - postgres
     restart: unless-stopped
