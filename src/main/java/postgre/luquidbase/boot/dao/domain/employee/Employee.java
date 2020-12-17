@@ -1,4 +1,4 @@
-package postgre.luquidbase.boot.domain.employee;
+package postgre.luquidbase.boot.dao.domain.employee;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

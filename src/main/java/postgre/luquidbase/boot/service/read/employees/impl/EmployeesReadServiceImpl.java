@@ -2,8 +2,8 @@ package postgre.luquidbase.boot.service.read.employees.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import postgre.luquidbase.boot.domain.employee.Employee;
-import postgre.luquidbase.boot.repository.EmployeesRepository;
+import postgre.luquidbase.boot.dao.domain.employee.Employee;
+import postgre.luquidbase.boot.dao.repository.EmployeesRepository;
 import postgre.luquidbase.boot.service.dto.employee.EmployeeDto;
 import postgre.luquidbase.boot.service.mapper.employyes.EmployeesMapper;
 import postgre.luquidbase.boot.service.read.employees.EmployeesReadService;
