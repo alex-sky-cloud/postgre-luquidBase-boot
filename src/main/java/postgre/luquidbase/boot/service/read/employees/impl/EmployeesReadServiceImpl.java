@@ -1,6 +1,7 @@
 package postgre.luquidbase.boot.service.read.employees.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Service;
 import postgre.luquidbase.boot.dao.domain.employee.Employee;
 import postgre.luquidbase.boot.dao.repository.EmployeesRepository;
@@ -10,6 +11,7 @@ import postgre.luquidbase.boot.service.read.employees.EmployeesReadService;
 
 import javax.transaction.Transactional;
 
+//@EnableAspectJAutoProxy(proxyTargetClass = )
 @Service
 public class EmployeesReadServiceImpl implements EmployeesReadService {
 
